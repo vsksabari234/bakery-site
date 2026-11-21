@@ -1,0 +1,6 @@
+{
+  "name": "Atelier Farine",
+  "description": "Artisanal sourdough bakery and viennoiserie crafting naturally leavened loaves, laminated pastries, and daily hearth bakes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
