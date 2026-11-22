@@ -22,17 +22,17 @@ export interface CartItem {
   variantId: string;
   variantLabel: string;
   weightOrCount: string;
-  unitPriceIdr: number;
+  unitPriceInr: number;
   quantity: number;
 }
 
 export interface CartTotals {
   itemCount: number;
-  subtotalIdr: number;
+  subtotalInr: number;
   formattedSubtotal: string;
-  freeGiftThresholdIdr: number;
+  freeGiftThresholdInr: number;
   qualifiesFreeGift: boolean;
-  remainingForFreeGiftIdr: number;
+  remainingForFreeGiftInr: number;
 }
 
 export interface PreOrderFormInput {
@@ -65,14 +65,11 @@ export interface CustomInquiryInput {
   notes: string;
 }
 
-export const FREE_GIFT_THRESHOLD_IDR = 200000;
+export const FREE_GIFT_THRESHOLD_INR = 1200;
 
-export function formatPrice(amountIdr: number): string {
-  const rounded = Math.round(amountIdr);
-  const formatted = rounded
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  return `Rp ${formatted}`;
+export function formatPrice(amountInr: number): string {
+  const rounded = Math.round(amountInr);
+  return `₹ ${rounded.toLocaleString('en-IN')}`;
 }
 
 export function filterProducts(
@@ -137,7 +134,7 @@ export function addToCart(
         variantId: variant.id,
         variantLabel: variant.label,
         weightOrCount: variant.weightOrCount,
-        unitPriceIdr: variant.priceIdr,
+        unitPriceInr: variant.priceInr,
         quantity: safeQuantity,
       },
     ];
@@ -170,23 +167,23 @@ export function removeFromCart(cart: CartItem[], itemKey: string): CartItem[] {
 
 export function calculateCartTotals(cart: CartItem[]): CartTotals {
   const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotalIdr = cart.reduce(
-    (sum, item) => sum + item.unitPriceIdr * item.quantity,
+  const subtotalInr = cart.reduce(
+    (sum, item) => sum + item.unitPriceInr * item.quantity,
     0
   );
-  const qualifiesFreeGift = subtotalIdr >= FREE_GIFT_THRESHOLD_IDR;
-  const remainingForFreeGiftIdr = Math.max(
+  const qualifiesFreeGift = subtotalInr >= FREE_GIFT_THRESHOLD_INR;
+  const remainingForFreeGiftInr = Math.max(
     0,
-    FREE_GIFT_THRESHOLD_IDR - subtotalIdr
+    FREE_GIFT_THRESHOLD_INR - subtotalInr
   );
 
   return {
     itemCount,
-    subtotalIdr,
-    formattedSubtotal: formatPrice(subtotalIdr),
-    freeGiftThresholdIdr: FREE_GIFT_THRESHOLD_IDR,
+    subtotalInr,
+    formattedSubtotal: formatPrice(subtotalInr),
+    freeGiftThresholdInr: FREE_GIFT_THRESHOLD_INR,
     qualifiesFreeGift,
-    remainingForFreeGiftIdr,
+    remainingForFreeGiftInr,
   };
 }
 
@@ -194,20 +191,20 @@ export function validatePreOrderForm(input: PreOrderFormInput): ValidationResult
   const errors: Record<string, string> = {};
 
   if (input.customerName.trim().length < 2) {
-    errors.customerName = 'Please enter your name for pickup or WA confirmation.';
+    errors.customerName = 'Please enter your name for your Cake Gallery order.';
   }
 
   const contact = input.contactInfo.trim();
   const looksLikeEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
   const digits = contact.replace(/\D/g, '');
-  const looksLikePhone = digits.length >= 8;
+  const looksLikePhone = digits.length >= 10;
 
   if (!looksLikeEmail && !looksLikePhone) {
-    errors.contactInfo = 'Enter a valid WhatsApp/phone number or email.';
+    errors.contactInfo = 'Enter a valid 10-digit WhatsApp/phone number or email.';
   }
 
   if (!input.pickupSlot.trim()) {
-    errors.pickupSlot = 'Select a pickup window.';
+    errors.pickupSlot = 'Select a pickup or delivery window.';
   }
 
   return {
@@ -225,7 +222,7 @@ export function createOrderReceipt(
   const code = 1000 + (Math.abs(seed) % 9000);
 
   return {
-    orderNumber: `PB-${code}`,
+    orderNumber: `CG-${code}`,
     customerName: input.customerName.trim(),
     contactInfo: input.contactInfo.trim(),
     pickupSlot: input.pickupSlot,
@@ -248,20 +245,20 @@ export function validateCustomInquiry(
   const contact = input.phoneOrEmail.trim();
   const looksLikeEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
   const digits = contact.replace(/\D/g, '');
-  const looksLikePhone = digits.length >= 8;
+  const looksLikePhone = digits.length >= 10;
 
   if (!looksLikeEmail && !looksLikePhone) {
-    errors.phoneOrEmail = 'Please enter a valid WhatsApp number or email.';
+    errors.phoneOrEmail = 'Please enter a valid 10-digit phone number or email.';
   }
 
   if (!input.pickupDate) {
-    errors.pickupDate = 'Please choose a requested delivery or pickup date.';
+    errors.pickupDate = 'Please choose an event or workshop date.';
   } else if (input.pickupDate < todayIso) {
-    errors.pickupDate = 'Pickup date cannot be in the past.';
+    errors.pickupDate = 'Event date cannot be in the past.';
   }
 
   if (input.notes.trim().length < 8) {
-    errors.notes = 'Share jar counts, hamper theme, or cake details.';
+    errors.notes = 'Share cake theme, weight, flavor, or message on cake.';
   }
 
   return {

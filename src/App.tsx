@@ -82,6 +82,15 @@ export default function App() {
     setQuery('');
   };
 
+  const handleSelectCategoryCard = (
+    nextCategory: CategoryFilter,
+    nextDietary: DietaryFilter = 'All'
+  ) => {
+    setCategory(nextCategory);
+    setDietary(nextDietary);
+    setQuery('');
+  };
+
   return (
     <div className="relative min-h-screen flex flex-col bg-[#FAF9F6] text-[#1C1917]">
       <BakeryBackdrop />
@@ -92,7 +101,10 @@ export default function App() {
       />
 
       <main className="relative z-10 flex-1">
-        <Hero />
+        <Hero
+          onSelectCategoryCard={handleSelectCategoryCard}
+          onSelectProduct={setSelectedProduct}
+        />
 
         <MenuCatalog
           products={filteredProducts}

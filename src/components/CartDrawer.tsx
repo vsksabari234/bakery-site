@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { CheckCircle2, Minus, Plus, Trash2, X } from 'lucide-react';
-import { PANDU_BRAND, PICKUP_TIME_SLOTS } from '../data/bakeryData';
+import { CAKE_GALLERY_BRAND, PICKUP_TIME_SLOTS } from '../data/bakeryData';
 import {
   calculateCartTotals,
   createOrderReceipt,
@@ -82,7 +82,7 @@ export function CartDrawer({
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Pre-order bag"
+      aria-label="Cake order bag"
       className="fixed inset-0 z-50 flex justify-end bg-black/45 backdrop-blur-[2px]"
       onClick={onClose}
     >
@@ -93,7 +93,7 @@ export function CartDrawer({
         <div className="px-6 py-4 border-b border-[#E7E5E0] bg-white flex items-center justify-between">
           <div>
             <h2 className="font-display text-xl text-[#1C1917]">
-              {receipt ? 'Order Confirmed' : 'Pandu Bakery Order Bag'}
+              {receipt ? 'Order Confirmed' : 'Cake Gallery Order Bag'}
             </h2>
             {!receipt && (
               <p className="text-xs text-[#57534E] tabular-nums">
@@ -117,24 +117,24 @@ export function CartDrawer({
             className="flex-1 overflow-y-auto p-6 space-y-6"
           >
             <div className="p-5 bg-white border border-[#E7E5E0] rounded-xl space-y-3">
-              <div className="flex items-center gap-2 text-[#4A2810]">
+              <div className="flex items-center gap-2 text-[#3B1E13]">
                 <CheckCircle2 className="w-5 h-5 shrink-0" aria-hidden="true" />
                 <span className="text-sm font-semibold">
                   Order #{receipt.orderNumber} Confirmed — Preparing Fresh
                 </span>
               </div>
               <p className="text-sm text-[#57534E]">
-                Reserved for{' '}
+                Booked for{' '}
                 <span className="font-medium text-[#1C1917]">
                   {receipt.customerName}
                 </span>{' '}
-                in the{' '}
+                during{' '}
                 <span className="font-medium text-[#1C1917] tabular-nums">
                   {receipt.pickupSlot}
                 </span>{' '}
-                window. Questions? Message WA{' '}
+                in {CAKE_GALLERY_BRAND.location}. Need cake wording changes? Call/WA{' '}
                 <span className="font-medium text-[#1C1917] tabular-nums">
-                  {PANDU_BRAND.whatsappDisplay}
+                  {CAKE_GALLERY_BRAND.contactDisplay}
                 </span>.
               </p>
             </div>
@@ -154,12 +154,12 @@ export function CartDrawer({
                     </div>
                   </div>
                   <span className="font-medium text-[#1C1917] tabular-nums whitespace-nowrap">
-                    {formatPrice(item.unitPriceIdr * item.quantity)}
+                    {formatPrice(item.unitPriceInr * item.quantity)}
                   </span>
                 </div>
               ))}
               <div className="px-4 py-3.5 flex items-center justify-between text-sm font-semibold text-[#1C1917]">
-                <span>Total (Pay on Pickup / Transfer)</span>
+                <span>Estimated Total</span>
                 <span className="tabular-nums">{receipt.formattedTotal}</span>
               </div>
             </div>
@@ -167,25 +167,25 @@ export function CartDrawer({
             <button
               type="button"
               onClick={handleStartNewOrder}
-              className="w-full py-3 px-4 text-sm font-medium text-white bg-[#4A2810] rounded-lg hover:bg-[#361C0A] transition-colors cursor-pointer min-h-[44px]"
+              className="w-full py-3 px-4 text-sm font-medium text-white bg-[#8E2945] rounded-lg hover:bg-[#711E35] transition-colors cursor-pointer min-h-[44px]"
             >
-              Done &amp; Return to Bakery
+              Done &amp; Return to Cake Gallery
             </button>
           </div>
         ) : cart.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
             <h3 className="font-display text-xl text-[#1C1917] mb-2">
-              Your order bag is empty
+              Your cake bag is empty
             </h3>
             <p className="text-sm text-[#57534E] max-w-xs mb-6">
-              Add Nastar jars, Kastengel cheese sticks, shell madeleines, or warm sesame buns to book your batch.
+              Add custom tiered cakes, Ferrero brownie slabs, fresh floral cakes, or a kids baking workshop pass.
             </p>
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 text-sm font-medium text-white bg-[#4A2810] rounded-lg hover:bg-[#361C0A] transition-colors cursor-pointer"
+              className="px-5 py-2.5 text-sm font-medium text-white bg-[#8E2945] rounded-lg hover:bg-[#711E35] transition-colors cursor-pointer"
             >
-              Browse Homemade Menu
+              Browse Cake Menu
             </button>
           </div>
         ) : (
@@ -193,16 +193,16 @@ export function CartDrawer({
             <div className="flex-1 overflow-y-auto p-6 space-y-5">
               <div className="px-4 py-3 bg-[#EFECE6] rounded-lg text-xs text-[#1C1917]">
                 {totals.qualifiesFreeGift ? (
-                  <span className="font-medium text-[#4A2810]">
-                    Included: Complimentary Pandu Bakery gift ribbon &amp; greeting tag.
+                  <span className="font-medium text-[#3B1E13]">
+                    Included: Complimentary custom acrylic topper &amp; celebration candles.
                   </span>
                 ) : (
                   <span>
                     Add{' '}
                     <span className="font-semibold tabular-nums">
-                      {formatPrice(totals.remainingForFreeGiftIdr)}
+                      {formatPrice(totals.remainingForFreeGiftInr)}
                     </span>{' '}
-                    more for complimentary gift ribbon wrapping.
+                    more for a complimentary custom cake topper &amp; candles.
                   </span>
                 )}
               </div>
@@ -261,7 +261,7 @@ export function CartDrawer({
                         </div>
 
                         <span className="text-sm font-semibold text-[#1C1917] tabular-nums whitespace-nowrap">
-                          {formatPrice(item.unitPriceIdr * item.quantity)}
+                          {formatPrice(item.unitPriceInr * item.quantity)}
                         </span>
                       </div>
                     </div>
@@ -276,7 +276,7 @@ export function CartDrawer({
                 className="space-y-3.5 pt-2"
               >
                 <h3 className="text-xs font-semibold tracking-wide text-[#57534E]">
-                  Pickup &amp; WhatsApp Details
+                  Pickup &amp; Delivery Details (Chennai)
                 </h3>
 
                 <div>
@@ -291,8 +291,8 @@ export function CartDrawer({
                     type="text"
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
-                    placeholder="Budi Santoso"
-                    className="w-full px-3 py-2 text-sm bg-white border border-[#E7E5E0] rounded-lg focus:outline-none focus:border-[#4A2810] min-h-[40px]"
+                    placeholder="Arjun Karthik"
+                    className="w-full px-3 py-2 text-sm bg-white border border-[#E7E5E0] rounded-lg focus:outline-none focus:border-[#3B1E13] min-h-[40px]"
                   />
                   {errors.customerName && (
                     <p className="text-xs text-[#991B1B] mt-1" role="alert">
@@ -306,15 +306,15 @@ export function CartDrawer({
                     htmlFor="checkout-contact"
                     className="block text-xs font-medium text-[#1C1917] mb-1"
                   >
-                    WhatsApp Number or Email
+                    Phone / WhatsApp or Email
                   </label>
                   <input
                     id="checkout-contact"
                     type="text"
                     value={contactInfo}
                     onChange={(e) => setContactInfo(e.target.value)}
-                    placeholder="0857 7316 9999 or email"
-                    className="w-full px-3 py-2 text-sm bg-white border border-[#E7E5E0] rounded-lg focus:outline-none focus:border-[#4A2810] min-h-[40px]"
+                    placeholder="72991 18863 or email"
+                    className="w-full px-3 py-2 text-sm bg-white border border-[#E7E5E0] rounded-lg focus:outline-none focus:border-[#3B1E13] min-h-[40px]"
                   />
                   {errors.contactInfo && (
                     <p className="text-xs text-[#991B1B] mt-1" role="alert">
@@ -328,13 +328,13 @@ export function CartDrawer({
                     htmlFor="checkout-slot"
                     className="block text-xs font-medium text-[#1C1917] mb-1"
                   >
-                    Preferred Pickup Window
+                    Preferred Pickup / Slot Window
                   </label>
                   <select
                     id="checkout-slot"
                     value={pickupSlot}
                     onChange={(e) => setPickupSlot(e.target.value)}
-                    className="w-full pl-3 pr-8 py-2 text-sm bg-white border border-[#E7E5E0] rounded-lg focus:outline-none focus:border-[#4A2810] min-h-[40px] tabular-nums"
+                    className="w-full pl-3 pr-8 py-2 text-sm bg-white border border-[#E7E5E0] rounded-lg focus:outline-none focus:border-[#3B1E13] min-h-[40px] tabular-nums"
                   >
                     {PICKUP_TIME_SLOTS.map((slot) => (
                       <option key={slot} value={slot}>
@@ -359,9 +359,9 @@ export function CartDrawer({
               <button
                 type="submit"
                 form="preorder-checkout-form"
-                className="w-full py-3 px-5 text-sm font-medium text-white bg-[#4A2810] rounded-lg hover:bg-[#361C0A] transition-colors cursor-pointer min-h-[44px]"
+                className="w-full py-3 px-5 text-sm font-medium text-white bg-[#8E2945] rounded-lg hover:bg-[#711E35] transition-colors cursor-pointer min-h-[44px]"
               >
-                Confirm Pre-Order
+                Confirm Cake Order
               </button>
             </div>
           </>

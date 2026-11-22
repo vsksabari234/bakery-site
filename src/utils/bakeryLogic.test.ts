@@ -13,68 +13,67 @@ import {
   validatePreOrderForm,
 } from './bakeryLogic';
 
-test('formatPrice formats Indonesian Rupiah with thousands dots', () => {
-  assert.equal(formatPrice(65000), 'Rp 65.000');
-  assert.equal(formatPrice(105000), 'Rp 105.000');
-  assert.equal(formatPrice(0), 'Rp 0');
+test('formatPrice formats Indian Rupees with Indian digit grouping', () => {
+  assert.equal(formatPrice(480), '₹ 480');
+  assert.equal(formatPrice(1450), '₹ 1,450');
+  assert.equal(formatPrice(0), '₹ 0');
 });
 
-test('filterProducts filters by category, dietary preference, and search query', () => {
-  const cookies = filterProducts(BAKERY_PRODUCTS, {
-    category: 'Cookies',
+test('filterProducts filters by category, preference tag, and search query', () => {
+  const brownies = filterProducts(BAKERY_PRODUCTS, {
+    category: 'Brownies & Slabs',
     dietary: 'All',
     query: '',
   });
-  assert.equal(cookies.length, 4);
+  assert.equal(brownies.length, 2);
 
-  const nutFreeCookies = filterProducts(BAKERY_PRODUCTS, {
-    category: 'Cookies',
-    dietary: 'Nut-Free',
+  const floralOrFruit = filterProducts(BAKERY_PRODUCTS, {
+    category: 'All',
+    dietary: 'Fresh Fruit & Floral',
     query: '',
   });
-  assert.equal(nutFreeCookies.length, 3);
+  assert.equal(floralOrFruit.length, 4);
 
-  const nastarSearch = filterProducts(BAKERY_PRODUCTS, {
+  const ferreroSearch = filterProducts(BAKERY_PRODUCTS, {
     category: 'All',
     dietary: 'All',
-    query: 'pineapple',
+    query: 'ferrero',
   });
-  assert.equal(nastarSearch.length, 1);
-  assert.equal(nastarSearch[0].id, 'nastar-pineapple');
+  assert.equal(ferreroSearch.length, 1);
+  assert.equal(ferreroSearch[0].id, 'ferrero-brownie-slab');
 });
 
 test('cart add, quantity steppers, remove, and subtotal calculations work cleanly', () => {
-  const nastar = BAKERY_PRODUCTS[0];
-  const kastengel = BAKERY_PRODUCTS[1];
+  const lavenderCake = BAKERY_PRODUCTS[0];
+  const ferreroBrownie = BAKERY_PRODUCTS[1];
 
-  let cart = addToCart([], nastar, nastar.variants[0], 2);
-  cart = addToCart(cart, kastengel, kastengel.variants[0], 1);
+  let cart = addToCart([], lavenderCake, lavenderCake.variants[0], 1);
+  cart = addToCart(cart, ferreroBrownie, ferreroBrownie.variants[0], 1);
 
   assert.equal(cart.length, 2);
-  assert.equal(cart[0].quantity, 2);
 
   let totals = calculateCartTotals(cart);
-  assert.equal(totals.itemCount, 3);
-  assert.equal(totals.subtotalIdr, 2 * 65000 + 75000);
-  assert.equal(totals.formattedSubtotal, 'Rp 205.000');
+  assert.equal(totals.itemCount, 2);
+  assert.equal(totals.subtotalInr, 1450 + 480);
+  assert.equal(totals.formattedSubtotal, '₹ 1,930');
   assert.equal(totals.qualifiesFreeGift, true);
 
-  cart = updateCartQuantity(cart, cart[0].key, -2);
+  cart = updateCartQuantity(cart, cart[0].key, -1);
   assert.equal(cart.length, 1);
 
   totals = calculateCartTotals(cart);
-  assert.equal(totals.subtotalIdr, 75000);
+  assert.equal(totals.subtotalInr, 480);
   assert.equal(totals.qualifiesFreeGift, false);
-  assert.equal(totals.remainingForFreeGiftIdr, 125000);
+  assert.equal(totals.remainingForFreeGiftInr, 720);
 
   cart = removeFromCart(cart, cart[0].key);
   assert.equal(cart.length, 0);
 });
 
-test('validatePreOrderForm rejects invalid inputs and accepts WhatsApp or email', () => {
+test('validatePreOrderForm rejects invalid inputs and accepts Chennai phone or email', () => {
   const invalid = validatePreOrderForm({
     customerName: 'A',
-    contactInfo: '123',
+    contactInfo: '12345',
     pickupSlot: '',
   });
   assert.equal(invalid.valid, false);
@@ -82,30 +81,30 @@ test('validatePreOrderForm rejects invalid inputs and accepts WhatsApp or email'
   assert.ok(invalid.errors.contactInfo);
   assert.ok(invalid.errors.pickupSlot);
 
-  const validWa = validatePreOrderForm({
-    customerName: 'Sari Wulandari',
-    contactInfo: '0857 7316 9999',
-    pickupSlot: '11:00 – 13:00',
+  const validPhone = validatePreOrderForm({
+    customerName: 'Kavya Ramesh',
+    contactInfo: '72991 18863',
+    pickupSlot: '15:00 – 18:00 (Evening)',
   });
-  assert.equal(validWa.valid, true);
+  assert.equal(validPhone.valid, true);
 });
 
-test('createOrderReceipt builds structured PB order confirmation', () => {
-  const nastar = BAKERY_PRODUCTS[0];
-  const cart = addToCart([], nastar, nastar.variants[0], 2);
+test('createOrderReceipt builds structured CG order confirmation', () => {
+  const brownie = BAKERY_PRODUCTS[1];
+  const cart = addToCart([], brownie, brownie.variants[0], 2);
   const receipt = createOrderReceipt(
     cart,
     {
-      customerName: 'Budi Santoso',
-      contactInfo: '085712345678',
-      pickupSlot: '09:00 – 11:00',
+      customerName: 'Arjun Karthik',
+      contactInfo: '9840123456',
+      pickupSlot: '12:00 – 15:00 (Afternoon)',
     },
     4082
   );
 
-  assert.equal(receipt.orderNumber, 'PB-5082');
+  assert.equal(receipt.orderNumber, 'CG-5082');
   assert.equal(receipt.itemCount, 2);
-  assert.equal(receipt.formattedTotal, 'Rp 130.000');
+  assert.equal(receipt.formattedTotal, '₹ 960');
 });
 
 test('validateCustomInquiry rejects past dates and empty notes', () => {
@@ -114,10 +113,10 @@ test('validateCustomInquiry rejects past dates and empty notes', () => {
       name: 'D',
       phoneOrEmail: '123',
       pickupDate: '2026-11-10',
-      occasionBox: 'Festive Cookie Hamper (4 Jars)',
+      occasionBox: 'Custom Birthday Theme Cake',
       notes: 'hi',
     },
-    '2026-11-21'
+    '2026-11-22'
   );
   assert.equal(invalid.valid, false);
   assert.ok(invalid.errors.name);
@@ -127,13 +126,13 @@ test('validateCustomInquiry rejects past dates and empty notes', () => {
 
   const valid = validateCustomInquiry(
     {
-      name: 'Dewi Lestari',
-      phoneOrEmail: '0857 7316 9999',
+      name: 'Nandhini S',
+      phoneOrEmail: '72991 18863',
       pickupDate: '2026-12-10',
-      occasionBox: 'Festive Cookie Hamper (4 Jars)',
-      notes: 'Three hampers with Nastar, Kastengel, and Putri Salju.',
+      occasionBox: 'Custom Birthday Theme Cake',
+      notes: '1.5 kg rose gold butterfly cake, chocolate truffle flavor, name Zaara.',
     },
-    '2026-11-21'
+    '2026-11-22'
   );
   assert.equal(valid.valid, true);
 });

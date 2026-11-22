@@ -45,7 +45,7 @@ export function ProductModal({
   const activeVariant =
     product.variants.find((v) => v.id === selectedVariantId) ||
     product.variants[0];
-  const lineTotalIdr = activeVariant.priceIdr * quantity;
+  const lineTotalInr = activeVariant.priceInr * quantity;
 
   return (
     <div
@@ -71,12 +71,12 @@ export function ProductModal({
         <div className="md:col-span-6 p-6 sm:p-7 flex flex-col justify-between gap-6">
           <div>
             <div className="flex items-start justify-between gap-4 mb-3">
-              <div className="text-xs text-[#57534E] flex items-center gap-2">
-                <span className="font-medium text-[#4A2810]">
+              <div className="text-xs text-[#57534E] flex flex-wrap items-center gap-2">
+                <span className="font-semibold text-[#8E2945]">
                   {product.category}
                 </span>
                 <span aria-hidden="true">·</span>
-                <span className="tabular-nums">{product.pullTime} Batch</span>
+                <span>{product.prepLead}</span>
                 <span aria-hidden="true">·</span>
                 <span>{product.availabilityNote}</span>
               </div>
@@ -99,7 +99,7 @@ export function ProductModal({
             </h2>
 
             <p className="text-lg font-semibold text-[#1C1917] tabular-nums mb-4">
-              {formatPrice(activeVariant.priceIdr)}
+              {formatPrice(activeVariant.priceInr)}
             </p>
 
             <p className="text-sm text-[#57534E] leading-relaxed mb-4">
@@ -108,18 +108,22 @@ export function ProductModal({
 
             <div className="py-3 border-y border-[#E7E5E0] space-y-2 text-xs text-[#57534E] mb-5">
               <div>
-                <span className="font-medium text-[#1C1917]">Ingredients &amp; Craft: </span>
+                <span className="font-medium text-[#1C1917]">Layers &amp; Craft: </span>
                 <span>{product.ingredientsAndMethod}</span>
               </div>
               <div>
                 <span className="font-medium text-[#1C1917]">Allergens: </span>
-                <span>{product.allergens.join(', ')}</span>
+                <span>
+                  {product.allergens.length > 0
+                    ? product.allergens.join(', ')
+                    : 'Fresh Fruit Only (Dairy & Flour Free)'}
+                </span>
               </div>
             </div>
 
             <div>
               <span className="block text-xs font-medium text-[#1C1917] mb-2">
-                Select Jar / Box Size
+                Select Weight / Serving Option
               </span>
               <div className="grid grid-cols-2 gap-2.5">
                 {product.variants.map((variant) => {
@@ -132,7 +136,7 @@ export function ProductModal({
                       aria-pressed={selected}
                       className={`p-3 rounded-lg border text-left transition-colors cursor-pointer ${
                         selected
-                          ? 'border-[#4A2810] bg-white ring-1 ring-[#4A2810]'
+                          ? 'border-[#8E2945] bg-white ring-1 ring-[#8E2945]'
                           : 'border-[#E7E5E0] bg-white hover:border-[#A8A29E]'
                       }`}
                     >
@@ -140,7 +144,7 @@ export function ProductModal({
                         {variant.label}
                       </div>
                       <div className="text-xs text-[#57534E] tabular-nums mt-0.5">
-                        {variant.weightOrCount} · {formatPrice(variant.priceIdr)}
+                        {variant.weightOrCount} · {formatPrice(variant.priceInr)}
                       </div>
                     </button>
                   );
@@ -181,9 +185,9 @@ export function ProductModal({
                 onAddToBag(product, activeVariant, quantity);
                 onClose();
               }}
-              className="flex-1 py-3 px-5 text-sm font-medium text-white bg-[#4A2810] rounded-lg hover:bg-[#361C0A] transition-colors whitespace-nowrap min-h-[44px] cursor-pointer tabular-nums"
+              className="flex-1 py-3 px-5 text-sm font-medium text-white bg-[#8E2945] rounded-lg hover:bg-[#711E35] transition-colors whitespace-nowrap min-h-[44px] cursor-pointer tabular-nums"
             >
-              Add to Bag — {formatPrice(lineTotalIdr)}
+              Add to Bag — {formatPrice(lineTotalInr)}
             </button>
           </div>
         </div>

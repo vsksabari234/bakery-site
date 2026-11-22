@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: pandu-bakery
+    name: cake-gallery
     runtime: static
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist

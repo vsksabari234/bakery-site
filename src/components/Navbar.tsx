@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Menu, ShoppingBag, X } from 'lucide-react';
-import { PANDU_BRAND } from '../data/bakeryData';
+import { CAKE_GALLERY_BRAND } from '../data/bakeryData';
 
 interface NavbarProps {
   itemCount: number;
@@ -8,23 +8,23 @@ interface NavbarProps {
 }
 
 const NAV_LINKS = [
-  { href: '#menu', label: 'Menu' },
-  { href: '#schedule', label: 'Bake Schedule' },
-  { href: '#craft', label: 'Hampers' },
-  { href: '#visit', label: 'Order & WA' },
+  { href: '#menu', label: 'Cake Menu' },
+  { href: '#craft', label: 'About & Camp' },
+  { href: '#schedule', label: 'Workshops' },
+  { href: '#visit', label: 'Contact Us' },
 ];
 
 export function Navbar({ itemCount, onOpenCart }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 bg-[#FAF9F6]/95 backdrop-blur-sm border-b border-[#E7E5E0]">
+    <header className="sticky top-0 z-40 bg-[#FFF9FA]/95 backdrop-blur-sm border-b border-[#F2D9E0]">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-8">
         <a
           href="#top"
-          className="font-display text-xl font-semibold tracking-tight text-[#1C1917] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4A2810]"
+          className="font-display text-xl font-semibold tracking-tight text-[#1C1917] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8E2945]"
         >
-          {PANDU_BRAND.name}
+          {CAKE_GALLERY_BRAND.name}
         </a>
 
         <nav
@@ -35,7 +35,7 @@ export function Navbar({ itemCount, onOpenCart }: NavbarProps) {
             <a
               key={link.href}
               href={link.href}
-              className="hover:text-[#1C1917] hover:underline underline-offset-4 decoration-[#4A2810]/40 transition-colors whitespace-nowrap shrink-0 py-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4A2810]"
+              className="hover:text-[#8E2945] hover:underline underline-offset-4 decoration-[#8E2945]/50 transition-colors whitespace-nowrap shrink-0 py-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8E2945]"
             >
               {link.label}
             </a>
@@ -46,8 +46,8 @@ export function Navbar({ itemCount, onOpenCart }: NavbarProps) {
           <button
             type="button"
             onClick={onOpenCart}
-            aria-label={`Open pre-order bag with ${itemCount} items`}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#4A2810] rounded-lg hover:bg-[#361C0A] transition-colors whitespace-nowrap shrink-0 min-h-[40px] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4A2810]"
+            aria-label={`Open order bag with ${itemCount} items`}
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#8E2945] rounded-lg hover:bg-[#711E35] transition-colors whitespace-nowrap shrink-0 min-h-[40px] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8E2945]"
           >
             <ShoppingBag className="w-4 h-4" strokeWidth={1.75} aria-hidden="true" />
             <span className="tabular-nums">Bag ({itemCount})</span>
@@ -58,7 +58,7 @@ export function Navbar({ itemCount, onOpenCart }: NavbarProps) {
             onClick={() => setMobileMenuOpen((prev) => !prev)}
             aria-expanded={mobileMenuOpen}
             aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            className="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-lg border border-[#E7E5E0] text-[#1C1917] bg-white hover:bg-[#F2EFE9] transition-colors cursor-pointer"
+            className="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-lg border border-[#F2D9E0] text-[#1C1917] bg-white hover:bg-[#FCE8EE] transition-colors cursor-pointer"
           >
             {mobileMenuOpen ? (
               <X className="w-5 h-5" aria-hidden="true" />
@@ -72,14 +72,14 @@ export function Navbar({ itemCount, onOpenCart }: NavbarProps) {
       {mobileMenuOpen && (
         <nav
           aria-label="Mobile navigation"
-          className="md:hidden border-t border-[#E7E5E0] bg-[#FAF9F6] px-6 py-4 flex flex-col gap-2"
+          className="md:hidden border-t border-[#F2D9E0] bg-[#FFF9FA] px-6 py-4 flex flex-col gap-2"
         >
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="py-2.5 text-sm font-medium text-[#1C1917] hover:text-[#4A2810] transition-colors whitespace-nowrap"
+              className="py-2.5 text-sm font-medium text-[#1C1917] hover:text-[#8E2945] transition-colors whitespace-nowrap"
             >
               {link.label}
             </a>

@@ -21,6 +21,22 @@
   font-variant-numeric: tabular-nums;
 }
 
+.scallop-divider-down {
+  height: 18px;
+  width: 100%;
+  background-image: radial-gradient(circle at 12px 0, #FCE8EE 12px, transparent 13px);
+  background-size: 24px 18px;
+  background-repeat: repeat-x;
+}
+
+.scallop-divider-up {
+  height: 18px;
+  width: 100%;
+  background-image: radial-gradient(circle at 12px 18px, #FDF0F4 12px, transparent 13px);
+  background-size: 24px 18px;
+  background-repeat: repeat-x;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

@@ -23,9 +23,18 @@ interface MenuCatalogProps {
   onSelectProduct: (product: BakeryProduct) => void;
 }
 
-const CATEGORIES: CategoryFilter[] = ['All', 'Cookies', 'Cake', 'Bread'];
+const CATEGORIES: CategoryFilter[] = [
+  'All',
+  'Custom Cakes',
+  'Brownies & Slabs',
+  'Cupcakes & Events',
+];
 
-const DIETARY_OPTIONS: DietaryFilter[] = ['All', 'Nut-Free', 'Cheese-Free'];
+const DIETARY_OPTIONS: DietaryFilter[] = [
+  'All',
+  'Eggless Option',
+  'Fresh Fruit & Floral',
+];
 
 export function MenuCatalog({
   products,
@@ -58,17 +67,17 @@ export function MenuCatalog({
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
           <div className="max-w-xl">
             <p className="text-xs font-medium tracking-wide text-[#57534E] mb-2">
-              Homemade Menu Selection
+              Cake Gallery Menu
             </p>
             <h2
               className="font-display text-3xl lg:text-4xl font-normal text-[#1C1917] tracking-tight"
               style={{ textWrap: 'balance' }}
             >
-              Fresh jars, butter cakes &amp; warm daily buns
+              Custom theme cakes, brownie slabs &amp; workshops
             </h2>
           </div>
           <p className="text-sm text-[#57534E] max-w-sm">
-            Select any item to view ingredients and jar sizes, or add directly to your pre-order bag.
+            Pick a creation to customize weight and serving size, or add straight to your order bag.
           </p>
         </div>
 
@@ -77,7 +86,7 @@ export function MenuCatalog({
             <div
               role="group"
               aria-label="Category filter"
-              className="inline-flex items-center gap-1 p-1 bg-[#EFECE6] rounded-lg"
+              className="inline-flex flex-wrap items-center gap-1 p-1 bg-[#EFECE6] rounded-lg"
             >
               {CATEGORIES.map((cat) => {
                 const active = category === cat;
@@ -101,8 +110,8 @@ export function MenuCatalog({
 
             <div
               role="group"
-              aria-label="Dietary filter"
-              className="inline-flex items-center gap-1 p-1 bg-[#EFECE6] rounded-lg"
+              aria-label="Preference filter"
+              className="inline-flex flex-wrap items-center gap-1 p-1 bg-[#EFECE6] rounded-lg"
             >
               {DIETARY_OPTIONS.map((opt) => {
                 const active = dietary === opt;
@@ -127,7 +136,7 @@ export function MenuCatalog({
 
           <div className="relative w-full lg:w-72">
             <label htmlFor="menu-search" className="sr-only">
-              Search cookies, cakes, or breads
+              Search cakes, brownies, or baking workshops
             </label>
             <Search
               className="w-4 h-4 text-[#78716C] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
@@ -138,8 +147,8 @@ export function MenuCatalog({
               type="search"
               value={query}
               onChange={(e) => onQueryChange(e.target.value)}
-              placeholder="Search nastar, cheese, buns..."
-              className="w-full pl-10 pr-9 py-2.5 text-sm bg-white border border-[#E7E5E0] rounded-lg text-[#1C1917] placeholder:text-[#78716C] focus:outline-none focus:border-[#4A2810] transition-colors min-h-[42px]"
+              placeholder="Search brownie, floral, cake..."
+              className="w-full pl-10 pr-9 py-2.5 text-sm bg-white border border-[#E7E5E0] rounded-lg text-[#1C1917] placeholder:text-[#78716C] focus:outline-none focus:border-[#8E2945] transition-colors min-h-[42px]"
             />
             {query.length > 0 && (
               <button
@@ -157,15 +166,15 @@ export function MenuCatalog({
         {products.length === 0 ? (
           <div className="bg-white border border-[#E7E5E0] rounded-xl py-14 px-6 text-center max-w-lg mx-auto">
             <h3 className="font-display text-xl text-[#1C1917] mb-2">
-              No bakes match your current filters
+              No cakes match your current filters
             </h3>
             <p className="text-sm text-[#57534E] mb-6">
-              Try clearing your search or switching back to all categories.
+              Try clearing your search or switching back to all cake categories.
             </p>
             <button
               type="button"
               onClick={onResetFilters}
-              className="px-5 py-2.5 text-sm font-medium text-white bg-[#4A2810] rounded-lg hover:bg-[#361C0A] transition-colors cursor-pointer min-h-[42px]"
+              className="px-5 py-2.5 text-sm font-medium text-white bg-[#8E2945] rounded-lg hover:bg-[#711E35] transition-colors cursor-pointer min-h-[42px]"
             >
               Reset Filters
             </button>
@@ -183,32 +192,32 @@ export function MenuCatalog({
                 <article
                   key={product.id}
                   data-testid={`product-card-${product.id}`}
-                  className="group bg-white border border-[#E7E5E0] rounded-xl overflow-hidden flex flex-col transition-transform duration-200 hover:-translate-y-0.5"
+                  className="group bg-white border border-[#EFE3E6] rounded-2xl overflow-hidden flex flex-col transition-transform duration-200 hover:-translate-y-0.5 shadow-xs"
                 >
                   <button
                     type="button"
                     onClick={() => onSelectProduct(product)}
                     aria-label={`View details for ${product.name}`}
-                    className="block w-full aspect-[4/3] overflow-hidden bg-[#F2EFE9] text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#4A2810]"
+                    className="block w-full aspect-[4/3] overflow-hidden bg-[#FDF2F5] text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#8E2945]"
                   >
                     <BakeryImage
                       src={product.imageUrl}
                       alt={product.imageAlt}
                       fallbackLabel={product.name}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                     />
                   </button>
 
                   <div className="p-5 flex-1 flex flex-col justify-between gap-4">
                     <div>
-                      <div className="flex items-center gap-2 text-xs text-[#57534E] mb-1.5">
-                        <span className="font-medium text-[#4A2810]">
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-[#57534E] mb-1.5">
+                        <span className="font-semibold text-[#8E2945] whitespace-nowrap">
                           {product.category}
                         </span>
                         <span aria-hidden="true">·</span>
-                        <span className="tabular-nums">{product.pullTime} Batch</span>
+                        <span className="whitespace-nowrap">{product.prepLead}</span>
                         <span aria-hidden="true">·</span>
-                        <span>{product.availabilityNote}</span>
+                        <span className="whitespace-nowrap">{product.availabilityNote}</span>
                       </div>
 
                       <div className="flex items-baseline justify-between gap-3 mb-2">
@@ -216,13 +225,13 @@ export function MenuCatalog({
                           <button
                             type="button"
                             onClick={() => onSelectProduct(product)}
-                            className="text-left hover:text-[#4A2810] transition-colors cursor-pointer"
+                            className="text-left hover:text-[#8E2945] transition-colors cursor-pointer"
                           >
                             {product.name}
                           </button>
                         </h3>
                         <span className="text-[15px] font-semibold text-[#1C1917] tabular-nums shrink-0 whitespace-nowrap">
-                          {formatPrice(primaryVariant.priceIdr)}
+                          {formatPrice(primaryVariant.priceInr)}
                         </span>
                       </div>
 
@@ -231,22 +240,22 @@ export function MenuCatalog({
                       </p>
                     </div>
 
-                    <div className="pt-3 border-t border-[#E7E5E0] flex items-center justify-between gap-3">
+                    <div className="pt-3 border-t border-[#F4E9EC] flex items-center justify-between gap-3">
                       <button
                         type="button"
                         onClick={() => onSelectProduct(product)}
-                        className="text-xs font-medium text-[#57534E] hover:text-[#1C1917] underline underline-offset-4 decoration-[#D6D3CD] cursor-pointer py-2 whitespace-nowrap shrink-0"
+                        className="text-xs font-medium text-[#57534E] hover:text-[#8E2945] underline underline-offset-4 decoration-[#E5CBD3] cursor-pointer py-2 whitespace-nowrap shrink-0"
                       >
-                        {primaryVariant.weightOrCount} · Sizes
+                        {primaryVariant.label} · Sizes
                       </button>
 
                       {inCart ? (
-                        <div className="inline-flex items-center border border-[#4A2810] rounded-lg overflow-hidden bg-[#FAF9F6]">
+                        <div className="inline-flex items-center border border-[#8E2945] rounded-lg overflow-hidden bg-[#FFF9FA]">
                           <button
                             type="button"
                             onClick={() => onUpdateQuantity(inCart.key, -1)}
                             aria-label={`Decrease quantity of ${product.name}`}
-                            className="w-9 h-9 flex items-center justify-center text-[#4A2810] hover:bg-[#EFECE6] transition-colors cursor-pointer"
+                            className="w-9 h-9 flex items-center justify-center text-[#8E2945] hover:bg-[#FCE8EE] transition-colors cursor-pointer"
                           >
                             <Minus className="w-3.5 h-3.5" aria-hidden="true" />
                           </button>
@@ -260,7 +269,7 @@ export function MenuCatalog({
                             type="button"
                             onClick={() => onUpdateQuantity(inCart.key, 1)}
                             aria-label={`Increase quantity of ${product.name}`}
-                            className="w-9 h-9 flex items-center justify-center text-[#4A2810] hover:bg-[#EFECE6] transition-colors cursor-pointer"
+                            className="w-9 h-9 flex items-center justify-center text-[#8E2945] hover:bg-[#FCE8EE] transition-colors cursor-pointer"
                           >
                             <Plus className="w-3.5 h-3.5" aria-hidden="true" />
                           </button>
@@ -270,7 +279,7 @@ export function MenuCatalog({
                           type="button"
                           onClick={() => onQuickAdd(product, primaryVariant)}
                           aria-label={`Add ${product.name} to bag`}
-                          className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-[#4A2810] rounded-lg hover:bg-[#361C0A] transition-colors whitespace-nowrap shrink-0 min-h-[38px] cursor-pointer"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-[#8E2945] rounded-lg hover:bg-[#711E35] transition-colors whitespace-nowrap shrink-0 min-h-[38px] cursor-pointer"
                         >
                           <Plus className="w-3.5 h-3.5" aria-hidden="true" />
                           <span>Add to Bag</span>
