@@ -14,63 +14,69 @@ import {
 } from './bakeryLogic';
 
 test('formatPrice formats Indian Rupees with Indian digit grouping', () => {
-  assert.equal(formatPrice(480), '₹ 480');
-  assert.equal(formatPrice(1450), '₹ 1,450');
+  assert.equal(formatPrice(280), '₹ 280');
+  assert.equal(formatPrice(1020), '₹ 1,020');
   assert.equal(formatPrice(0), '₹ 0');
 });
 
 test('filterProducts filters by category, preference tag, and search query', () => {
-  const brownies = filterProducts(BAKERY_PRODUCTS, {
-    category: 'Brownies & Slabs',
+  const chocolates = filterProducts(BAKERY_PRODUCTS, {
+    category: 'Chocolates & Desserts',
     dietary: 'All',
     query: '',
   });
-  assert.equal(brownies.length, 2);
+  assert.equal(chocolates.length, 3);
 
-  const floralOrFruit = filterProducts(BAKERY_PRODUCTS, {
-    category: 'All',
-    dietary: 'Fresh Fruit & Floral',
+  const breadsAndCookies = filterProducts(BAKERY_PRODUCTS, {
+    category: 'Artisan Breads & Cookies',
+    dietary: 'All',
     query: '',
   });
-  assert.equal(floralOrFruit.length, 4);
+  assert.equal(breadsAndCookies.length, 2);
 
-  const ferreroSearch = filterProducts(BAKERY_PRODUCTS, {
+  const hotCocoaSearch = filterProducts(BAKERY_PRODUCTS, {
     category: 'All',
     dietary: 'All',
-    query: 'ferrero',
+    query: 'cocoa',
   });
-  assert.equal(ferreroSearch.length, 1);
-  assert.equal(ferreroSearch[0].id, 'ferrero-brownie-slab');
+  assert.equal(hotCocoaSearch.length, 3);
+
+  const moongSearch = filterProducts(BAKERY_PRODUCTS, {
+    category: 'All',
+    dietary: 'All',
+    query: 'moong',
+  });
+  assert.equal(moongSearch.length, 1);
 });
 
 test('cart add, quantity steppers, remove, and subtotal calculations work cleanly', () => {
-  const lavenderCake = BAKERY_PRODUCTS[0];
-  const ferreroBrownie = BAKERY_PRODUCTS[1];
+  const moltenBowl = BAKERY_PRODUCTS[0];
+  const ferreroSlab = BAKERY_PRODUCTS[4];
 
-  let cart = addToCart([], lavenderCake, lavenderCake.variants[0], 1);
-  cart = addToCart(cart, ferreroBrownie, ferreroBrownie.variants[0], 1);
+  let cart = addToCart([], moltenBowl, moltenBowl.variants[0], 1);
+  cart = addToCart(cart, ferreroSlab, ferreroSlab.variants[1], 1);
 
   assert.equal(cart.length, 2);
 
   let totals = calculateCartTotals(cart);
   assert.equal(totals.itemCount, 2);
-  assert.equal(totals.subtotalInr, 1450 + 480);
-  assert.equal(totals.formattedSubtotal, '₹ 1,930');
+  assert.equal(totals.subtotalInr, 280 + 1020);
+  assert.equal(totals.formattedSubtotal, '₹ 1,300');
   assert.equal(totals.qualifiesFreeGift, true);
 
-  cart = updateCartQuantity(cart, cart[0].key, -1);
+  cart = updateCartQuantity(cart, cart[1].key, -1);
   assert.equal(cart.length, 1);
 
   totals = calculateCartTotals(cart);
-  assert.equal(totals.subtotalInr, 480);
+  assert.equal(totals.subtotalInr, 280);
   assert.equal(totals.qualifiesFreeGift, false);
-  assert.equal(totals.remainingForFreeGiftInr, 720);
+  assert.equal(totals.remainingForFreeGiftInr, 920);
 
   cart = removeFromCart(cart, cart[0].key);
   assert.equal(cart.length, 0);
 });
 
-test('validatePreOrderForm rejects invalid inputs and accepts Chennai phone or email', () => {
+test('validatePreOrderForm rejects invalid inputs and accepts phone or email', () => {
   const invalid = validatePreOrderForm({
     customerName: 'A',
     contactInfo: '12345',
@@ -83,28 +89,28 @@ test('validatePreOrderForm rejects invalid inputs and accepts Chennai phone or e
 
   const validPhone = validatePreOrderForm({
     customerName: 'Kavya Ramesh',
-    contactInfo: '72991 18863',
-    pickupSlot: '15:00 – 18:00 (Evening)',
+    contactInfo: '98401 23456',
+    pickupSlot: '16:00 – 19:00 (Evening Tea Batch)',
   });
   assert.equal(validPhone.valid, true);
 });
 
-test('createOrderReceipt builds structured CG order confirmation', () => {
-  const brownie = BAKERY_PRODUCTS[1];
-  const cart = addToCart([], brownie, brownie.variants[0], 2);
+test('createOrderReceipt builds structured DD order confirmation', () => {
+  const cookies = BAKERY_PRODUCTS[3];
+  const cart = addToCart([], cookies, cookies.variants[0], 2);
   const receipt = createOrderReceipt(
     cart,
     {
       customerName: 'Arjun Karthik',
       contactInfo: '9840123456',
-      pickupSlot: '12:00 – 15:00 (Afternoon)',
+      pickupSlot: '13:00 – 16:00 (Afternoon Slot)',
     },
     4082
   );
 
-  assert.equal(receipt.orderNumber, 'CG-5082');
+  assert.equal(receipt.orderNumber, 'DD-5082');
   assert.equal(receipt.itemCount, 2);
-  assert.equal(receipt.formattedTotal, '₹ 960');
+  assert.equal(receipt.formattedTotal, '₹ 520');
 });
 
 test('validateCustomInquiry rejects past dates and empty notes', () => {
@@ -113,10 +119,10 @@ test('validateCustomInquiry rejects past dates and empty notes', () => {
       name: 'D',
       phoneOrEmail: '123',
       pickupDate: '2026-11-10',
-      occasionBox: 'Custom Birthday Theme Cake',
+      occasionBox: 'Whole Wheat Fresh Bread Loaf',
       notes: 'hi',
     },
-    '2026-11-22'
+    '2026-11-25'
   );
   assert.equal(invalid.valid, false);
   assert.ok(invalid.errors.name);
@@ -127,12 +133,12 @@ test('validateCustomInquiry rejects past dates and empty notes', () => {
   const valid = validateCustomInquiry(
     {
       name: 'Nandhini S',
-      phoneOrEmail: '72991 18863',
+      phoneOrEmail: '98401 23456',
       pickupDate: '2026-12-10',
-      occasionBox: 'Custom Birthday Theme Cake',
-      notes: '1.5 kg rose gold butterfly cake, chocolate truffle flavor, name Zaara.',
+      occasionBox: 'Premium Chocolate Gift Box',
+      notes: '2 jars of rich hot chocolate mix and 1 twin pack wheat bread.',
     },
-    '2026-11-22'
+    '2026-11-25'
   );
   assert.equal(valid.valid, true);
 });

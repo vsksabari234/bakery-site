@@ -28,6 +28,7 @@ import { ProductModal } from './components/ProductModal';
 import { CartDrawer } from './components/CartDrawer';
 import { Footer } from './components/Footer';
 import { BakeryBackdrop } from './components/BakeryBackdrop';
+import { OpeningLoader } from './components/OpeningLoader';
 
 export default function App() {
   const [category, setCategory] = useState<CategoryFilter>('All');
@@ -92,7 +93,8 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-[#FAF9F6] text-[#1C1917]">
+    <div className="relative min-h-screen flex flex-col bg-white text-[#2D2326]">
+      <OpeningLoader />
       <BakeryBackdrop />
 
       <Navbar
@@ -157,14 +159,14 @@ export default function App() {
         <div
           role="status"
           aria-live="polite"
-          className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-5 sm:bottom-5 z-30 bg-[#18181B] text-white px-4 py-3 rounded-lg shadow-lg flex items-center justify-between gap-4 text-xs sm:max-w-sm"
+          className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-5 sm:bottom-5 z-30 bg-[#2D2326] text-white px-5 py-3.5 rounded-full shadow-lg flex items-center justify-between gap-4 text-xs sm:max-w-sm border border-[#F5BFC9]"
         >
           <span className="truncate">{addedNotice}</span>
           <div className="flex items-center gap-3 shrink-0">
             <button
               type="button"
               onClick={handleOpenCart}
-              className="font-semibold underline underline-offset-4 whitespace-nowrap cursor-pointer"
+              className="font-semibold text-[#F9BAC6] underline underline-offset-4 whitespace-nowrap cursor-pointer"
             >
               View Bag ({cartTotals.itemCount})
             </button>
@@ -172,7 +174,7 @@ export default function App() {
               type="button"
               onClick={() => setAddedNotice(null)}
               aria-label="Dismiss notification"
-              className="text-zinc-400 hover:text-white whitespace-nowrap cursor-pointer"
+              className="text-[#D9C4BC] hover:text-white whitespace-nowrap cursor-pointer"
             >
               Close
             </button>

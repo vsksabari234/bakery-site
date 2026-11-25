@@ -1,13 +1,14 @@
 import { useState, type FormEvent } from 'react';
-import { CheckCircle2, Instagram, MapPin, Phone } from 'lucide-react';
-import { CAKE_GALLERY_BRAND } from '../data/bakeryData';
+import { CheckCircle2, Instagram, ShieldCheck, Sparkles } from 'lucide-react';
+import { DOLCE_BRAND } from '../data/bakeryData';
 import { validateCustomInquiry } from '../utils/bakeryLogic';
+import { BakeryImage } from './BakeryImage';
 
 const OCCASION_OPTIONS = [
-  'Custom Two-Tier Birthday Cake',
-  'Ferrero / Strawberry Brownie Slab',
-  'Kids Baking Workshop Registration (T. Nagar)',
-  'Anniversary / Surprise Gift Cake',
+  'Molten Chocolate Bowl / Fudge Slab',
+  'Rich in Chocolate Hot Cocoa Mix',
+  'Fresh Whole Wheat Bread Loaves',
+  'Butter Jam Cookies & Gift Hamper',
 ];
 
 export function VisitAndInquiry() {
@@ -52,102 +53,117 @@ export function VisitAndInquiry() {
   };
 
   return (
-    <section id="visit" className="scroll-mt-20 py-16 lg:py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-        <div className="lg:col-span-5 space-y-6">
-          <div>
-            <p className="text-xs font-semibold tracking-widest uppercase text-[#8E2945] mb-2">
-              Get In Touch
-            </p>
-            <h2
-              className="font-display text-3xl font-semibold text-[#1C1917] tracking-tight mb-4"
-              style={{ textWrap: 'balance' }}
-            >
-              Feel free to contact &amp; order your dream cake
-            </h2>
-            <p className="text-sm text-[#57534E] leading-relaxed">
-              Have questions or ready to place a custom cake order? Reach out for theme designs, eggless requests, or kids baking workshop seats in T. Nagar, Chennai.
-            </p>
+    <section id="visit" className="scroll-mt-20 py-14 sm:py-16 lg:py-20 bg-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div className="lg:col-span-5 space-y-5 min-w-0">
+          <div className="rounded-[28px] sm:rounded-[32px] overflow-hidden border-4 border-white shadow-[0_14px_34px_-12px_rgba(208,78,107,0.2)] bg-[#FDE6EA]">
+            <div className="aspect-[4/3] overflow-hidden">
+              <BakeryImage
+                src="/assets/dolce-divino/dolce_ferrero_slab.jpg"
+                alt="Dolce Divino triple chocolate and praline fudge slab"
+                fallbackLabel="Triple Chocolate & Praline Fudge Slab"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
 
-          <div className="space-y-3.5">
-            <div className="flex items-center gap-4 p-4 rounded-2xl bg-[#FFF9FA] border border-[#F2D9E0]">
-              <div className="w-11 h-11 rounded-full bg-[#FCE3EA] text-[#8E2945] flex items-center justify-center shrink-0">
-                <Phone className="w-5 h-5" aria-hidden="true" />
-              </div>
-              <div>
-                <div className="text-xs font-medium text-[#57534E]">
-                  Phone &amp; WhatsApp
-                </div>
-                <div className="text-sm font-semibold text-[#1C1917] tabular-nums">
-                  +91 {CAKE_GALLERY_BRAND.contactDisplay}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 p-4 rounded-2xl bg-[#FFF9FA] border border-[#F2D9E0]">
-              <div className="w-11 h-11 rounded-full bg-[#FCE3EA] text-[#8E2945] flex items-center justify-center shrink-0">
+          <div className="space-y-3">
+            <div className="flex items-center gap-4 p-4 rounded-3xl bg-[#FFF7F9] border border-[#FCE4E9]">
+              <div className="w-11 h-11 rounded-full bg-[#F9BAC6] text-[#2E131B] flex items-center justify-center shrink-0">
                 <Instagram className="w-5 h-5" aria-hidden="true" />
               </div>
               <div>
-                <div className="text-xs font-medium text-[#57534E]">
-                  Instagram DM
+                <div className="text-xs font-medium text-[#594A4E]">
+                  Instagram DM to Order
                 </div>
-                <div className="text-sm font-semibold text-[#1C1917]">
-                  {CAKE_GALLERY_BRAND.handle}
+                <div className="text-sm font-semibold text-[#2D2326]">
+                  {DOLCE_BRAND.handle} · {DOLCE_BRAND.name}
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-4 p-4 rounded-2xl bg-[#FFF9FA] border border-[#F2D9E0]">
-              <div className="w-11 h-11 rounded-full bg-[#FCE3EA] text-[#8E2945] flex items-center justify-center shrink-0">
-                <MapPin className="w-5 h-5" aria-hidden="true" />
+            <div className="flex items-center gap-4 p-4 rounded-3xl bg-[#FFF7F9] border border-[#FCE4E9]">
+              <div className="w-11 h-11 rounded-full bg-[#BDF2EC] text-[#123834] flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-5 h-5" aria-hidden="true" />
               </div>
               <div>
-                <div className="text-xs font-medium text-[#57534E]">
-                  Studio Location
+                <div className="text-xs font-medium text-[#594A4E]">
+                  Kitchen Certification
                 </div>
-                <div className="text-sm font-semibold text-[#1C1917]">
-                  {CAKE_GALLERY_BRAND.location} · Homemade Fresh
+                <div className="text-sm font-semibold text-[#2D2326]">
+                  {DOLCE_BRAND.credential} · Clean Home Kitchen
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 p-4 rounded-3xl bg-[#FFF7F9] border border-[#FCE4E9]">
+              <div className="w-11 h-11 rounded-full bg-[#FFEBD6] text-[#5E3A1E] flex items-center justify-center shrink-0">
+                <Sparkles className="w-5 h-5" aria-hidden="true" />
+              </div>
+              <div>
+                <div className="text-xs font-medium text-[#594A4E]">
+                  Creator &amp; Specialties
+                </div>
+                <div className="text-sm font-semibold text-[#2D2326]">
+                  Baker &amp; Vlogger · Baking · Lifestyle · Travel
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="lg:col-span-7 bg-[#FFF9FA] border border-[#F2D9E0] rounded-2xl p-6 sm:p-8 shadow-xs">
+        <div className="lg:col-span-7 bg-[#FFF7F9] border border-[#FCE4E9] rounded-[28px] sm:rounded-[32px] p-5 sm:p-8 shadow-[0_14px_34px_-14px_rgba(208,78,118,0.16)] min-w-0">
           <div className="mb-6">
-            <p className="text-xs font-semibold tracking-wide text-[#8E2945] mb-1">
-              Custom Theme &amp; Workshop Request
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#C84B68] mb-1.5">
+              DM to Order
             </p>
-            <h3 className="font-display text-2xl font-semibold text-[#1C1917]">
-              Request a Custom Cake or Class Slot
-            </h3>
+            <h2
+              className="font-display text-2xl sm:text-3xl font-bold text-[#221A1D] tracking-tight mb-2"
+              style={{ textWrap: 'balance' }}
+            >
+              Please fill the details to reach us
+            </h2>
+            <p className="text-sm text-[#594A4E]">
+              Reserve fresh whole wheat loaves, rich chocolate jars, butter jam cookies, or curated gift packs baked to order.
+            </p>
           </div>
 
           {submittedDetails ? (
             <div
               data-testid="inquiry-confirmation"
-              className="py-8 px-6 bg-white border border-[#F2D9E0] rounded-xl space-y-4"
+              className="py-8 px-6 bg-white border border-[#FCE4E9] rounded-3xl space-y-4"
             >
-              <div className="flex items-center gap-2.5 text-[#8E2945]">
+              <div className="flex items-center gap-2.5 text-[#C84B68]">
                 <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
                 <span className="text-sm font-semibold">
-                  Enquiry Received — Cake Gallery will reply shortly
+                  Request Received — Dolce Divino will reply shortly
                 </span>
               </div>
-              <p className="text-sm text-[#57534E] leading-relaxed">
-                Thank you, <span className="font-medium text-[#1C1917]">{submittedDetails.name}</span>. We noted your request for{' '}
-                <span className="font-medium text-[#1C1917]">{submittedDetails.occasionBox}</span> on{' '}
-                <span className="font-medium text-[#1C1917] tabular-nums">{submittedDetails.pickupDate}</span>. For faster custom cake quotes, call or WhatsApp{' '}
-                <span className="font-medium text-[#1C1917] tabular-nums">{CAKE_GALLERY_BRAND.contactDisplay}</span>.
+              <p className="text-sm text-[#594A4E] leading-relaxed">
+                Thank you,{' '}
+                <span className="font-semibold text-[#2D2326]">
+                  {submittedDetails.name}
+                </span>
+                . We noted your request for{' '}
+                <span className="font-semibold text-[#2D2326]">
+                  {submittedDetails.occasionBox}
+                </span>{' '}
+                on{' '}
+                <span className="font-semibold text-[#2D2326] tabular-nums">
+                  {submittedDetails.pickupDate}
+                </span>
+                . We typically reply within a day on{' '}
+                <span className="font-semibold text-[#2D2326]">
+                  {DOLCE_BRAND.handle}
+                </span>
+                .
               </p>
               <button
                 type="button"
                 onClick={handleReset}
-                className="px-4 py-2 text-xs font-medium text-[#8E2945] bg-[#FFF9FA] border border-[#EBC6D1] rounded-lg hover:border-[#8E2945] transition-colors cursor-pointer"
+                className="px-5 py-2 text-xs font-semibold text-[#C84B68] bg-[#FFF5F7] border border-[#F5C5CF] rounded-full hover:border-[#D65A76] transition-colors cursor-pointer"
               >
-                Send Another Enquiry
+                Send Another Request
               </button>
             </div>
           ) : (
@@ -156,7 +172,7 @@ export function VisitAndInquiry() {
                 <div>
                   <label
                     htmlFor="inquiry-name"
-                    className="block text-xs font-medium text-[#1C1917] mb-1.5"
+                    className="block text-xs font-semibold text-[#2D2326] mb-1.5"
                   >
                     Full Name
                   </label>
@@ -165,8 +181,8 @@ export function VisitAndInquiry() {
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Nandhini S"
-                    className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#E7E5E0] rounded-lg focus:outline-none focus:border-[#8E2945] min-h-[42px]"
+                    placeholder="Ananya R"
+                    className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#F5D6DF] rounded-xl text-[#2D2326] placeholder:text-[#8A767C] focus:outline-none focus:border-[#D65A76] focus:ring-2 focus:ring-[#FDE6EA] min-h-[44px]"
                   />
                   {errors.name && (
                     <p className="text-xs text-[#991B1B] mt-1" role="alert">
@@ -178,7 +194,7 @@ export function VisitAndInquiry() {
                 <div>
                   <label
                     htmlFor="inquiry-contact"
-                    className="block text-xs font-medium text-[#1C1917] mb-1.5"
+                    className="block text-xs font-semibold text-[#2D2326] mb-1.5"
                   >
                     Phone / WhatsApp or Email
                   </label>
@@ -188,7 +204,7 @@ export function VisitAndInquiry() {
                     value={phoneOrEmail}
                     onChange={(e) => setPhoneOrEmail(e.target.value)}
                     placeholder="98401 23456 or email"
-                    className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#E7E5E0] rounded-lg focus:outline-none focus:border-[#8E2945] min-h-[42px]"
+                    className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#F5D6DF] rounded-xl text-[#2D2326] placeholder:text-[#8A767C] focus:outline-none focus:border-[#D65A76] focus:ring-2 focus:ring-[#FDE6EA] min-h-[44px]"
                   />
                   {errors.phoneOrEmail && (
                     <p className="text-xs text-[#991B1B] mt-1" role="alert">
@@ -202,16 +218,16 @@ export function VisitAndInquiry() {
                 <div>
                   <label
                     htmlFor="inquiry-date"
-                    className="block text-xs font-medium text-[#1C1917] mb-1.5"
+                    className="block text-xs font-semibold text-[#2D2326] mb-1.5"
                   >
-                    Event or Workshop Date
+                    Preferred Bake / Delivery Date
                   </label>
                   <input
                     id="inquiry-date"
                     type="date"
                     value={pickupDate}
                     onChange={(e) => setPickupDate(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#E7E5E0] rounded-lg focus:outline-none focus:border-[#8E2945] min-h-[42px] tabular-nums"
+                    className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#F5D6DF] rounded-xl text-[#2D2326] focus:outline-none focus:border-[#D65A76] focus:ring-2 focus:ring-[#FDE6EA] min-h-[44px] tabular-nums"
                   />
                   {errors.pickupDate && (
                     <p className="text-xs text-[#991B1B] mt-1" role="alert">
@@ -223,15 +239,15 @@ export function VisitAndInquiry() {
                 <div>
                   <label
                     htmlFor="inquiry-box"
-                    className="block text-xs font-medium text-[#1C1917] mb-1.5"
+                    className="block text-xs font-semibold text-[#2D2326] mb-1.5"
                   >
-                    Order or Class Type
+                    Creation Type
                   </label>
                   <select
                     id="inquiry-box"
                     value={occasionBox}
                     onChange={(e) => setOccasionBox(e.target.value)}
-                    className="w-full pl-3.5 pr-8 py-2.5 text-sm bg-white border border-[#E7E5E0] rounded-lg focus:outline-none focus:border-[#8E2945] min-h-[42px]"
+                    className="w-full pl-3.5 pr-8 py-2.5 text-sm bg-white border border-[#F5D6DF] rounded-xl text-[#2D2326] focus:outline-none focus:border-[#D65A76] focus:ring-2 focus:ring-[#FDE6EA] min-h-[44px]"
                   >
                     {OCCASION_OPTIONS.map((opt) => (
                       <option key={opt} value={opt}>
@@ -245,17 +261,17 @@ export function VisitAndInquiry() {
               <div>
                 <label
                   htmlFor="inquiry-notes"
-                  className="block text-xs font-medium text-[#1C1917] mb-1.5"
+                  className="block text-xs font-semibold text-[#2D2326] mb-1.5"
                 >
-                  Cake Theme, Weight, Flavor &amp; Name on Cake
+                  Quantities, Chocolate Preferences &amp; Gift Notes
                 </label>
                 <textarea
                   id="inquiry-notes"
                   rows={3}
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Share weight (500g / 1.5 kg), eggless preference, theme colors, flavor (Choco Truffle / Butterscotch / Rasmalai), or child age for workshop..."
-                  className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#E7E5E0] rounded-lg focus:outline-none focus:border-[#8E2945]"
+                  placeholder="Share pack quantities (e.g., 2 whole wheat loaves, 1 hot cocoa jar, 1 jam cookie box) or gifting message..."
+                  className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#F5D6DF] rounded-xl text-[#2D2326] placeholder:text-[#8A767C] focus:outline-none focus:border-[#D65A76] focus:ring-2 focus:ring-[#FDE6EA]"
                 />
                 {errors.notes && (
                   <p className="text-xs text-[#991B1B] mt-1" role="alert">
@@ -264,15 +280,15 @@ export function VisitAndInquiry() {
                 )}
               </div>
 
-              <div className="pt-2 flex items-center justify-between gap-4">
-                <span className="text-xs text-[#57534E]">
-                  1–2 days advance booking for two-tier theme cakes.
+              <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+                <span className="text-xs text-[#594A4E]">
+                  Baked fresh on order in small homemade batches.
                 </span>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 text-sm font-medium text-white bg-[#8E2945] rounded-lg hover:bg-[#711E35] transition-colors whitespace-nowrap shrink-0 min-h-[44px] cursor-pointer"
+                  className="w-full sm:w-auto px-7 py-2.5 text-sm font-semibold text-white bg-[#D65A76] rounded-full hover:bg-[#BF4863] transition-colors whitespace-nowrap shrink-0 min-h-[44px] cursor-pointer shadow-[0_8px_20px_-10px_rgba(214,90,118,0.5)]"
                 >
-                  Submit Enquiry
+                  Submit Request
                 </button>
               </div>
             </form>

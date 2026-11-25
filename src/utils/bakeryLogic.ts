@@ -191,7 +191,7 @@ export function validatePreOrderForm(input: PreOrderFormInput): ValidationResult
   const errors: Record<string, string> = {};
 
   if (input.customerName.trim().length < 2) {
-    errors.customerName = 'Please enter your name for your Cake Gallery order.';
+    errors.customerName = 'Please enter your name for your Dolce Divino order.';
   }
 
   const contact = input.contactInfo.trim();
@@ -204,7 +204,7 @@ export function validatePreOrderForm(input: PreOrderFormInput): ValidationResult
   }
 
   if (!input.pickupSlot.trim()) {
-    errors.pickupSlot = 'Select a pickup or delivery window.';
+    errors.pickupSlot = 'Select a dispatch or pickup window.';
   }
 
   return {
@@ -222,7 +222,7 @@ export function createOrderReceipt(
   const code = 1000 + (Math.abs(seed) % 9000);
 
   return {
-    orderNumber: `CG-${code}`,
+    orderNumber: `DD-${code}`,
     customerName: input.customerName.trim(),
     contactInfo: input.contactInfo.trim(),
     pickupSlot: input.pickupSlot,

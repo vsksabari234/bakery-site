@@ -1,32 +1,32 @@
-import { CAKE_GALLERY_BRAND } from '../data/bakeryData';
+import { DOLCE_BRAND } from '../data/bakeryData';
 
 export function Footer() {
   return (
-    <footer className="relative z-10 border-t border-[#F2D9E0] bg-[#FDF0F4] py-10">
-      <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 text-xs text-[#57534E]">
+    <footer className="relative z-10 bg-[#FDE6EA] border-t border-[#F8CFD8] py-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 text-xs text-[#594A4E]">
         <div className="space-y-1">
-          <div className="font-display text-base font-semibold text-[#1C1917]">
-            {CAKE_GALLERY_BRAND.name}
+          <div className="font-script text-xl text-[#D04E6B]">
+            {DOLCE_BRAND.name}
           </div>
           <p>
-            Homemade Cakes, Brownies &amp; Baking Classes · {CAKE_GALLERY_BRAND.location} · {CAKE_GALLERY_BRAND.contactDisplay}
+            {DOLCE_BRAND.tagline} · {DOLCE_BRAND.credential} · {DOLCE_BRAND.handle}
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-6">
-          <a href="#menu" className="hover:text-[#8E2945] transition-colors">
-            Cake Menu
+        <div className="flex flex-wrap items-center gap-6 font-medium">
+          <a href="#menu" className="hover:text-[#D04E6B] transition-colors">
+            Menu
           </a>
-          <a href="#schedule" className="hover:text-[#8E2945] transition-colors">
-            Workshops
+          <a href="#craft" className="hover:text-[#D04E6B] transition-colors">
+            Our Story
           </a>
-          <a href="#craft" className="hover:text-[#8E2945] transition-colors">
-            Custom Themes
+          <a href="#schedule" className="hover:text-[#D04E6B] transition-colors">
+            Bake Schedule
           </a>
-          <a href="#visit" className="hover:text-[#8E2945] transition-colors">
-            Order &amp; Contact
+          <a href="#visit" className="hover:text-[#D04E6B] transition-colors">
+            DM to Order
           </a>
-          <span className="text-[#78716C]">© 2026 {CAKE_GALLERY_BRAND.name}</span>
+          <span className="text-[#8A767C]">© 2026 {DOLCE_BRAND.name}</span>
         </div>
       </div>
     </footer>
